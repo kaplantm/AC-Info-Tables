@@ -14,7 +14,7 @@ import BugReportTwoToneIcon from "@material-ui/icons/BugReportTwoTone"
 import Container from "@material-ui/core/Container"
 import Link from "@material-ui/core/Link"
 import Typography from "@material-ui/core/Typography"
-import { Box } from "@material-ui/core"
+import Box from "@material-ui/core/Box"
 
 const useStyles = makeStyles(theme => ({
   footer: {

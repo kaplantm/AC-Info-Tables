@@ -8,7 +8,6 @@ export const BUG_TABLE_META = [
     id: "name",
     sortable: true,
     alignRight: false,
-    disablePadding: false,
     label: "Name",
     displayGetter: undefined,
     wrap: false,
@@ -17,7 +16,6 @@ export const BUG_TABLE_META = [
     id: "price",
     sortable: true,
     alignRight: true,
-    disablePadding: false,
     label: "Price",
     displayGetter: undefined,
   },
@@ -25,7 +23,6 @@ export const BUG_TABLE_META = [
     id: "location",
     sortable: true,
     alignRight: false,
-    disablePadding: false,
     label: "Location",
     displayGetter: undefined,
     wrap: true,
@@ -34,7 +31,6 @@ export const BUG_TABLE_META = [
     id: "hours",
     sortable: false,
     alignRight: false,
-    disablePadding: false,
     label: "Active Hours",
     displayGetter: hours => {
       return hours
@@ -52,7 +48,6 @@ export const BUG_TABLE_META = [
     id: "months",
     sortable: false,
     alignRight: false,
-    disablePadding: false,
     label: "Active Months",
     displayGetter: (months, { south }) => {
       if (months.length === MONTHS.ALL_MONTHS.length) {
@@ -75,7 +70,6 @@ export const BUG_TABLE_META = [
     id: "unlock",
     sortable: true,
     alignRight: true,
-    disablePadding: false,
     label: "Unlocks At",
     displayGetter: undefined,
     wrap: false,

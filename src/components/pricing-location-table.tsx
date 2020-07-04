@@ -8,7 +8,7 @@ import TextField from "@material-ui/core/TextField"
 import SortableTable from "../components/sortable-table"
 import Box from "@material-ui/core/Box"
 import useDebounce from "../hooks/useDebounce"
-import { Typography } from "@material-ui/core"
+import Typography from "@material-ui/core/Typography"
 
 function computeDataGetters(initialTableData, tableMeta, getterOptions) {
   return initialTableData.map(row =>

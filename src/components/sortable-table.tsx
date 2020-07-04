@@ -10,6 +10,7 @@ import TableRow from "@material-ui/core/TableRow"
 import TableSortLabel from "@material-ui/core/TableSortLabel"
 import Paper from "@material-ui/core/Paper"
 import { stableSort, getComparator } from "../utils/sorting-utils"
+import { fade } from "@material-ui/core/styles/colorManipulator"
 
 function EnhancedTableHead(props) {
   const { headCells, order, orderBy, onRequestSort, classes } = props
@@ -20,12 +21,11 @@ function EnhancedTableHead(props) {
 
   return (
     <TableHead>
-      <TableRow>
+      <TableRow className={classes.tableHeader}>
         {headCells.map(headCell => (
           <TableCell
             key={headCell.id}
             align={headCell.alignRight ? "right" : "left"}
-            padding={headCell.disablePadding ? "none" : "default"}
             sortDirection={orderBy === headCell.id ? order : false}
             className={clsx(classes.noWrap, classes.tableCell)}
           >
@@ -52,12 +52,18 @@ const useStyles = makeStyles(theme => ({
     width: "100%",
     marginBottom: theme.spacing(2),
   },
+  tableContainer: {
+    minWidth: 500,
+    maxHeight: 500,
+  },
   table: {
     minWidth: 500,
-  },
-  tableCell: {
-    paddingLeft: "5px",
-    paddingRight: "5px",
+    "& td:first-child": {
+      backgroundColor: fade(theme.palette.primary.main, 0.05),
+    },
+    "& tr:nth-child(even)": {
+      backgroundColor: fade(theme.palette.primary.main, 0.05),
+    },
   },
   noWrap: {
     whiteSpace: "nowrap",
@@ -67,7 +73,6 @@ const useStyles = makeStyles(theme => ({
 // If we used a getter, show computed value, otherwise show raw value
 function getTableCellContent(row, headCellId, headCellIdDisplayGetter) {
   const computedKey = `${headCellId}_computed`
-  console.log(row, headCellId, headCellIdDisplayGetter)
   return headCellIdDisplayGetter ? row[computedKey] : row[headCellId]
 }
 
@@ -90,13 +95,16 @@ function SortableTable({
     setOrderBy(property)
   }
 
-  console.log("render table")
-  // console.log("render table", JSON.stringify({ dataArray, headCells, title }))
   return (
     <div className={classes.root}>
       <Paper className={classes.paper}>
-        <TableContainer>
-          <Table size="small" className={classes.table} aria-label={title}>
+        <TableContainer className={classes.tableContainer}>
+          <Table
+            size="small"
+            className={classes.table}
+            aria-label={title}
+            stickyHeader
+          >
             <EnhancedTableHead
               classes={classes}
               headCells={headCells}
@@ -109,13 +117,12 @@ function SortableTable({
               {stableSort(dataArray, getComparator(order, orderBy)).map(
                 (row, rowIndex) => {
                   return (
-                    <TableRow hover tabIndex={-1} key={row.name}>
+                    <TableRow tabIndex={-1} key={row.name}>
                       {headCells.map(headCell => {
                         return (
                           <TableCell
                             key={`${row.name}${headCell.id}`}
                             align={headCell.alignRight ? "right" : "left"}
-                            classes={{ root: classes.tableCell }}
                             className={headCell.wrap ? "" : classes.noWrap}
                           >
                             {getTableCellContent(

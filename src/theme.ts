@@ -15,6 +15,13 @@ const theme = createMuiTheme({
     },
   },
   overrides: {
+    MuiTableCell: {
+      stickyHeader: {
+        backgroundColor: "#E5E7F7",
+        fontWeight: 800,
+        borderBottom: "3px solid #B9C0EA",
+      },
+    },
     MuiTypography: {
       root: {
         "&.italic": {

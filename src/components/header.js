@@ -3,7 +3,7 @@ import { makeStyles } from "@material-ui/core/styles"
 import Box from "@material-ui/core/Box"
 import Typography from "@material-ui/core/Typography"
 import React from "react"
-import { Link as MuiLink } from "@material-ui/core"
+import MuiLink from "@material-ui/core/Link"
 import { fade } from "@material-ui/core/styles/colorManipulator"
 
 const useStyles = makeStyles(theme => ({
@@ -36,6 +36,17 @@ const useStyles = makeStyles(theme => ({
   titleBox: {
     backgroundColor: theme.palette.primary.main,
     display: "flex",
+    whiteSpace: "nowrap",
+  },
+  subtitle: {
+    color: theme.palette.grey,
+    fontStyle: "italic",
+    alignSelf: "flex-end",
+    whiteSpace: "nowrap",
+    // margin: theme.spacing(0, 3, 0, 3),
+    // [theme.breakpoints.down("md")]: {
+    margin: theme.spacing(2, 3, 0, 3),
+    // },
   },
 }))
 
@@ -66,10 +77,13 @@ const Header = ({ siteTitle }) => {
 
           <Typography variant="h4" className={classes.navItem}>
             <MuiLink component={Link} to="/bugs">
-              Bugs
+              Bugs?
             </MuiLink>
           </Typography>
         </nav>
+        <Typography variant="subtitle1" className={classes.subtitle}>
+          Assorted helpful info for Animal Crossing New Horizons.
+        </Typography>
       </Box>
     </header>
   )
