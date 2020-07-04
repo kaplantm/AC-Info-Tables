@@ -1,11 +1,9 @@
 import { Link } from "gatsby"
-import Toolbar from "@material-ui/core/Toolbar"
 import { makeStyles } from "@material-ui/core/styles"
 import Box from "@material-ui/core/Box"
 import Typography from "@material-ui/core/Typography"
 import React from "react"
-import theme from "../theme"
-import { Link as MuiLink, Container } from "@material-ui/core"
+import { Link as MuiLink } from "@material-ui/core"
 import { fade } from "@material-ui/core/styles/colorManipulator"
 
 const useStyles = makeStyles(theme => ({

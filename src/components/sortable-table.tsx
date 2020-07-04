@@ -64,15 +64,20 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
+// If we used a getter, show computed value, otherwise show raw value
+function getTableCellContent(row, headCellId, headCellIdDisplayGetter) {
+  const computedKey = `${headCellId}_computed`
+  console.log(row, headCellId, headCellIdDisplayGetter)
+  return headCellIdDisplayGetter ? row[computedKey] : row[headCellId]
+}
+
 function SortableTable({
   dataArray,
   headCells,
-  getterOptions,
   title,
 }: {
   dataArray: any
   headCells: any
-  getterOptions: any
   title: string
 }) {
   const classes = useStyles()
@@ -85,6 +90,8 @@ function SortableTable({
     setOrderBy(property)
   }
 
+  console.log("render table")
+  // console.log("render table", JSON.stringify({ dataArray, headCells, title }))
   return (
     <div className={classes.root}>
       <Paper className={classes.paper}>
@@ -111,12 +118,11 @@ function SortableTable({
                             classes={{ root: classes.tableCell }}
                             className={headCell.wrap ? "" : classes.noWrap}
                           >
-                            {headCell.displayGetter
-                              ? headCell.displayGetter(
-                                  row[headCell.id],
-                                  getterOptions
-                                )
-                              : row[headCell.id]}
+                            {getTableCellContent(
+                              row,
+                              headCell.id,
+                              headCell.displayGetter
+                            )}
                           </TableCell>
                         )
                       })}

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"
+import React, { useEffect, useMemo } from "react"
 import { makeStyles } from "@material-ui/core/styles"
 import FormControl from "@material-ui/core/FormControl"
 import FormGroup from "@material-ui/core/FormGroup"
@@ -9,6 +9,23 @@ import SortableTable from "../components/sortable-table"
 import Box from "@material-ui/core/Box"
 import useDebounce from "../hooks/useDebounce"
 import { Typography } from "@material-ui/core"
+
+function computeDataGetters(initialTableData, tableMeta, getterOptions) {
+  return initialTableData.map(row =>
+    tableMeta.reduce((accumulator, currentTableMeta) => {
+      accumulator[currentTableMeta.id] = row[currentTableMeta.id]
+      accumulator[
+        `${currentTableMeta.id}_computed`
+      ] = currentTableMeta.displayGetter
+        ? currentTableMeta.displayGetter(
+            row[currentTableMeta.id],
+            getterOptions
+          )
+        : row[currentTableMeta.id]
+      return accumulator
+    }, {})
+  )
+}
 
 function getAvailableThisMonth(data, date) {
   const month = date.toLocaleString("default", { month: "long" })
@@ -97,15 +114,23 @@ const PricingLocationTable = ({
     south: false,
     search: "",
   })
-  const [tableData, setTableData] = React.useState(initialTableData)
-  const debouncedSearchTerm = useDebounce(state.search, 150)
+  // Will only recompute display getters when hemiphere is changed
+  const computedData = useMemo(
+    () =>
+      computeDataGetters(initialTableData, tableMeta, {
+        south: state.south,
+      }),
+    [state.south]
+  )
+  const [tableData, setTableData] = React.useState(computedData)
+  const debouncedSearchTerm = useDebounce(state.search, 200)
 
   useEffect(() => {
-    setTableData(applyFilters(initialTableData, state))
-  }, [state.month, state.now, state.south])
+    setTableData(applyFilters(computedData, state))
+  }, [state.month, state.now, computedData])
 
   useEffect(() => {
-    setTableData(applyFilters(initialTableData, state))
+    setTableData(applyFilters(computedData, state))
   }, [debouncedSearchTerm])
 
   function toggleMonth() {
@@ -194,7 +219,6 @@ const PricingLocationTable = ({
         title={`${tableType} Pricing And Locations`}
         dataArray={tableData}
         headCells={tableMeta}
-        getterOptions={{ south: state.south }}
       />
     </>
   )
