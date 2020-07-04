@@ -14,6 +14,18 @@ const theme = createMuiTheme({
       default: "#fff",
     },
   },
+  overrides: {
+    MuiTypography: {
+      root: {
+        "&.italic": {
+          fontStyle: "italic",
+        },
+      },
+      body2: {
+        color: "grey",
+      },
+    },
+  },
 })
 
 export default theme

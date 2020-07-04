@@ -35,7 +35,7 @@ export const FISH_TABLE_META = [
     sortable: false,
     alignRight: false,
     disablePadding: false,
-    label: "Hours",
+    label: "Active Hours",
     displayGetter: hours => {
       return hours
         .map(hoursArray => {
@@ -53,11 +53,22 @@ export const FISH_TABLE_META = [
     sortable: false,
     alignRight: false,
     disablePadding: false,
-    label: "Months",
-    displayGetter: months => {
-      return months.length === MONTHS.ALL_MONTHS.length
-        ? "All"
-        : months.join(", ")
+    label: "Active Months",
+    displayGetter: (months, { south }) => {
+      if (months.length === MONTHS.ALL_MONTHS.length) {
+        return "All"
+      }
+      let localizedMonths = [...months]
+      if (south) {
+        localizedMonths = months.map(month => {
+          const index = MONTHS.ALL_MONTHS.indexOf(month)
+          const newIndex = (index + 6) % MONTHS.ALL_MONTHS.length
+          const newMonth = MONTHS.ALL_MONTHS[newIndex]
+          console.log({ month, index, newIndex, newMonth })
+          return newMonth
+        })
+      }
+      return localizedMonths.join(", ")
     },
     wrap: true,
   },
@@ -75,7 +86,7 @@ export const FISH_TABLE_META = [
     sortable: true,
     alignRight: true,
     disablePadding: false,
-    label: "# Caught",
+    label: "Unlocks At",
     displayGetter: undefined,
     wrap: false,
   },

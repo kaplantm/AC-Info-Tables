@@ -1,6 +1,6 @@
 module.exports = {
   siteMetadata: {
-    title: `Animal Crossing Helpers`,
+    title: `AC Info`,
     description: `Assorted helpful info for Animal Crossing New Horizons.`,
     author: `@kaplantm`,
   },

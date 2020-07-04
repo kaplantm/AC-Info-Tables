@@ -10,17 +10,14 @@ import SortableTable from "../components/sortable-table"
 import FISH_DATA, { FISH_TABLE_META } from "../data/fish"
 import Box from "@material-ui/core/Box"
 import useDebounce from "../hooks/useDebounce"
+import { Typography } from "@material-ui/core"
 
-function getAvailableThisMonth(data) {
-  const date = new Date()
+function getAvailableThisMonth(data, date) {
   const month = date.toLocaleString("default", { month: "long" })
-  console.log(month)
-
   return data.filter(row => row.months.indexOf(month) !== -1)
 }
 
-function getAvailableNow(data) {
-  const date = new Date()
+function getAvailableNow(data, date) {
   const hourAmPmNoSpaces = date
     .toLocaleString("en-US", {
       hour: "numeric",
@@ -39,9 +36,6 @@ function getAvailableNow(data) {
     return hasHour
   })
 }
-// function getSouthernHemisphereData(data) {
-//   return data
-// }
 
 function getFilteredByName(data, search) {
   return data.filter(row =>
@@ -49,18 +43,19 @@ function getFilteredByName(data, search) {
   )
 }
 function applyFilters(data, { month, now, south, search }) {
-  console.log("applyFilters")
+  const date = new Date()
+  if (south) {
+    date.setMonth(date.getMonth() + 6)
+  }
+
   let filteredData = [...data]
   if (month) {
-    console.log("month")
-    filteredData = getAvailableThisMonth(filteredData)
+    filteredData = getAvailableThisMonth(filteredData, date)
   }
   if (now) {
-    console.log("now")
-    filteredData = getAvailableNow(filteredData)
+    filteredData = getAvailableNow(filteredData, date)
   }
   if (search) {
-    console.log("search")
     filteredData = getFilteredByName(filteredData, search)
   }
   return filteredData
@@ -74,18 +69,23 @@ const useStyles = makeStyles(theme => ({
   filterFormGroup: {
     display: "flex",
     flex: 1,
+  },
+  search: {
+    marginBottom: theme.spacing(3),
+    maxWidth: "20em",
+  },
+  checkboxes: {
     justifyContent: "space-between",
-    marginLeft: "1em",
+    [theme.breakpoints.down("sm")]: {
+      flexDirection: "column",
+      "& label": {
+        marginTop: theme.spacing(1),
+        marginBottom: theme.spacing(1),
+      },
+    },
   },
 }))
 
-// TODO: add available this month filter
-// todo: availabel now
-// todo: shift for southern hemisphere?
-// TODO: search
-// github issue link to file bug
-
-// sort isn't working right?
 const FishTable = () => {
   const classes = useStyles()
   const [state, setState] = React.useState({
@@ -129,55 +129,74 @@ const FishTable = () => {
   return (
     <>
       <FormControl component="fieldset" fullWidth>
-        <Box display="flex" alignItems="center" justifyContent="center" mb={2}>
-          <FormLabel component="legend">Filter:</FormLabel>
+        <Box mb={2}>
           <FormGroup row className={classes.filterFormGroup}>
-            <TextField
-              id="standard-search"
-              label="Search field"
-              type="search"
-              value={state.search}
-              onChange={handleSearchChange}
-            />
-            <div>
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={state.month}
-                    onChange={toggleMonth}
-                    name="month"
-                  />
-                }
-                label="Available This Month"
+            <Box display="flex" flex={1} flexDirection="column" mb={2}>
+              <TextField
+                id="standard-search"
+                label="Search By Name"
+                type="search"
+                value={state.search}
+                onChange={handleSearchChange}
+                className={classes.search}
               />
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={state.now}
-                    onChange={toggleNow}
-                    name="now"
+
+              <Box
+                display="flex"
+                flex={1}
+                mb={2}
+                className={classes.checkboxes}
+              >
+                <div>
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        checked={state.month}
+                        onChange={toggleMonth}
+                        name="month"
+                      />
+                    }
+                    label="Available This Month"
                   />
-                }
-                label="Available Now"
-              />
-            </div>
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={state.south}
-                  onChange={toggleSouth}
-                  name="now"
-                  disabled={!state.month}
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        checked={state.now}
+                        onChange={toggleNow}
+                        name="now"
+                      />
+                    }
+                    label="Available Now"
+                  />
+                </div>
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={state.south}
+                      onChange={toggleSouth}
+                      name="now"
+                    />
+                  }
+                  label="Southern Hemisphere"
                 />
-              }
-              label="I'm in the Southern Hemisphere"
-            />
+              </Box>
+            </Box>
           </FormGroup>
+
+          <Typography variant="body2" className="italic">
+            * Unlocks At refers to the number of fish you must catch before a
+            given fish will spawn.
+          </Typography>
         </Box>
       </FormControl>
-      <SortableTable dataArray={tableData} headCells={FISH_TABLE_META} />
+      <SortableTable
+        title="Fish Pricing And Locations"
+        dataArray={tableData}
+        headCells={FISH_TABLE_META}
+        getterOptions={{ south: state.south }}
+      />
     </>
   )
 }
-//  TODO: hemisphere toggle and search
+
 export default FishTable

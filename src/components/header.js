@@ -6,24 +6,28 @@ import theme from "../theme"
 
 const Header = ({ siteTitle }) => (
   <header>
-    <Box
-      bgcolor={theme.palette.primary.main}
-      display="flex"
-      flex={1}
-      p={3}
-      mb={6}
-    >
-      <Typography variant="h3" component="h1">
-        <Link
-          to="/"
-          style={{
-            color: `white`,
-            textDecoration: `none`,
-          }}
-        >
-          {siteTitle}
-        </Link>
-      </Typography>
+    <Box display="flex" mb={6} mr={3} mt={2} justifyContent="flex-start">
+      <Box
+        bgcolor={theme.palette.primary.main}
+        display="flex"
+        p={3}
+        pr={6}
+        pl={6}
+        justifyContent="center"
+        borderRight={`20px solid ${theme.palette.primary.light}`}
+      >
+        <Typography variant="h3" component="h1" align="center">
+          <Link
+            to="/"
+            style={{
+              color: `white`,
+              textDecoration: `none`,
+            }}
+          >
+            {siteTitle}
+          </Link>
+        </Typography>
+      </Box>
     </Box>
   </header>
 )

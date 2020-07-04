@@ -12,7 +12,7 @@ import Paper from "@material-ui/core/Paper"
 import { stableSort, getComparator } from "../utils/sorting-utils"
 
 function EnhancedTableHead(props) {
-  const { headCells, order, orderBy, onRequestSort } = props
+  const { headCells, order, orderBy, onRequestSort, classes } = props
 
   const createSortHandler = property => event => {
     onRequestSort(event, property)
@@ -27,6 +27,7 @@ function EnhancedTableHead(props) {
             align={headCell.alignRight ? "right" : "left"}
             padding={headCell.disablePadding ? "none" : "default"}
             sortDirection={orderBy === headCell.id ? order : false}
+            className={clsx(classes.noWrap, classes.tableCell)}
           >
             <TableSortLabel
               disabled={!headCell.sortable}
@@ -52,7 +53,11 @@ const useStyles = makeStyles(theme => ({
     marginBottom: theme.spacing(2),
   },
   table: {
-    minWidth: 750,
+    minWidth: 500,
+  },
+  tableCell: {
+    paddingLeft: "5px",
+    paddingRight: "5px",
   },
   noWrap: {
     whiteSpace: "nowrap",
@@ -62,9 +67,13 @@ const useStyles = makeStyles(theme => ({
 function SortableTable({
   dataArray,
   headCells,
+  getterOptions,
+  title,
 }: {
   dataArray: any
   headCells: any
+  getterOptions: any
+  title: string
 }) {
   const classes = useStyles()
   const [order, setOrder] = React.useState("asc")
@@ -80,11 +89,7 @@ function SortableTable({
     <div className={classes.root}>
       <Paper className={classes.paper}>
         <TableContainer>
-          <Table
-            className={classes.table}
-            aria-labelledby="tableTitle"
-            aria-label="enhanced table"
-          >
+          <Table size="small" className={classes.table} aria-label={title}>
             <EnhancedTableHead
               classes={classes}
               headCells={headCells}
@@ -103,10 +108,14 @@ function SortableTable({
                           <TableCell
                             key={`${row.name}${headCell.id}`}
                             align={headCell.alignRight ? "right" : "left"}
+                            classes={{ root: classes.tableCell }}
                             className={headCell.wrap ? "" : classes.noWrap}
                           >
                             {headCell.displayGetter
-                              ? headCell.displayGetter(row[headCell.id])
+                              ? headCell.displayGetter(
+                                  row[headCell.id],
+                                  getterOptions
+                                )
                               : row[headCell.id]}
                           </TableCell>
                         )

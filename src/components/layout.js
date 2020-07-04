@@ -11,6 +11,7 @@ import { useStaticQuery, graphql } from "gatsby"
 
 import Header from "./header"
 import "./layout.css"
+import { Link } from "@material-ui/core"
 
 const Layout = ({ children }) => {
   const data = useStaticQuery(graphql`
@@ -35,15 +36,29 @@ const Layout = ({ children }) => {
       >
         <main>{children}</main>
       </div>
+      <footer
+        style={{
+          margin: `20px auto`,
+          maxWidth: 960,
+          padding: `0 1.0875rem 1.45rem`,
+        }}
+      >
+        © {new Date().getFullYear()},{" "}
+        <Link href="https://github.com/kaplantm" target="_blank">
+          kaplantm
+        </Link>
+        . Data sourced from{" "}
+        <Link
+          href="https://www.vg247.com/2020/06/25/animal-crossing-new-horizons-fish-prices-locations/"
+          target="_blank"
+        >
+          VG247
+        </Link>
+        .
+      </footer>
     </>
   )
 }
-
-// <footer>
-// © {new Date().getFullYear()}, Built with
-// {` `}
-// <a href="https://www.gatsbyjs.org">Gatsby</a>
-// </footer>
 
 Layout.propTypes = {
   children: PropTypes.node.isRequired,
