@@ -2,6 +2,7 @@ import * as LOCATIONS from "./helpers/locations"
 import * as MONTHS from "./helpers/months"
 import * as SIZES from "./helpers/sizes"
 import * as HOURS from "./helpers/hours"
+import { ListItemText } from "@material-ui/core"
 
 export const FISH_TABLE_META = [
   {
@@ -58,19 +59,28 @@ export const FISH_TABLE_META = [
     disablePadding: false,
     label: "Active Months",
     displayGetter: (months, { south }) => {
+      let workingMonths = [...months]
+      let usingException = false
       if (months.length === MONTHS.ALL_MONTHS.length) {
         return "All"
       }
-      let localizedMonths = [...months]
       if (south) {
-        localizedMonths = months.map(month => {
+        workingMonths = months.map(month => {
           const index = MONTHS.ALL_MONTHS.indexOf(month)
           const newIndex = (index + 6) % MONTHS.ALL_MONTHS.length
           const newMonth = MONTHS.ALL_MONTHS[newIndex]
           return newMonth
         })
       }
-      return localizedMonths.join(", ")
+      if (workingMonths.length > 8) {
+        workingMonths = MONTHS.ALL_MONTHS.filter(
+          month => workingMonths.indexOf(month) === -1
+        )
+        usingException = true
+      }
+      return usingException
+        ? `All except ${workingMonths.join(", ")}`
+        : workingMonths.join(", ")
     },
     wrap: true,
   },
