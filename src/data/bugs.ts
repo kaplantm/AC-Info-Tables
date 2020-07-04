@@ -1,8 +1,8 @@
 import * as LOCATIONS from "./helpers/locations"
 import * as MONTHS from "./helpers/months"
-import * as SIZES from "./helpers/sizes"
 import * as HOURS from "./helpers/hours"
 
+// TODO: move metas into shared file
 export const BUG_TABLE_META = [
   {
     id: "name",
@@ -64,7 +64,6 @@ export const BUG_TABLE_META = [
           const index = MONTHS.ALL_MONTHS.indexOf(month)
           const newIndex = (index + 6) % MONTHS.ALL_MONTHS.length
           const newMonth = MONTHS.ALL_MONTHS[newIndex]
-          console.log({ month, index, newIndex, newMonth })
           return newMonth
         })
       }

@@ -6,7 +6,7 @@ import SEO from "../components/seo"
 import { makeStyles } from "@material-ui/core/styles"
 import SortableTable from "../components/sortable-table"
 import FISH_DATA, { FISH_TABLE_META } from "../data/fish"
-import FishTable from "../components/fish-table"
+import PricingLocationTable from "../components/pricing-location-table"
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -18,23 +18,24 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-// TODO: add available this month filter
-// todo: availabel now
-// todo: shift for southern hemisphere?
-// TODO: search
+// Clean up header and move title into app bar
+// change theme color
+
 // github issue link to file bug
 // TOOD: typing
 
 // sort isn't working right?
 const IndexPage = () => {
-  const classes = useStyles()
-  const [features, setFeatures] = React.useState(true)
-  const [info, setInfo] = React.useState(true)
-
   return (
     <Layout>
       <SEO title="Home" />
-      <FishTable />
+      <PricingLocationTable
+        notice="* Unlocks At refers to the number of fish you must catch before a
+      given fish will spawn."
+        initialTableData={FISH_DATA}
+        tableMeta={FISH_TABLE_META}
+        tableType="Fish"
+      />
     </Layout>
   )
 }

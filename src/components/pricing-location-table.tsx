@@ -1,13 +1,11 @@
-import React, { useEffect, memo } from "react"
+import React, { useEffect } from "react"
 import { makeStyles } from "@material-ui/core/styles"
-import FormLabel from "@material-ui/core/FormLabel"
 import FormControl from "@material-ui/core/FormControl"
 import FormGroup from "@material-ui/core/FormGroup"
 import FormControlLabel from "@material-ui/core/FormControlLabel"
 import Checkbox from "@material-ui/core/Checkbox"
 import TextField from "@material-ui/core/TextField"
 import SortableTable from "../components/sortable-table"
-import FISH_DATA, { FISH_TABLE_META } from "../data/fish"
 import Box from "@material-ui/core/Box"
 import useDebounce from "../hooks/useDebounce"
 import { Typography } from "@material-ui/core"
@@ -86,7 +84,12 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-const FishTable = () => {
+const PricingLocationTable = ({
+  initialTableData,
+  tableMeta,
+  tableType,
+  notice,
+}) => {
   const classes = useStyles()
   const [state, setState] = React.useState({
     month: false,
@@ -94,15 +97,15 @@ const FishTable = () => {
     south: false,
     search: "",
   })
-  const [tableData, setTableData] = React.useState(FISH_DATA)
-  const debouncedSearchTerm = useDebounce(state.search, 100)
+  const [tableData, setTableData] = React.useState(initialTableData)
+  const debouncedSearchTerm = useDebounce(state.search, 150)
 
   useEffect(() => {
-    setTableData(applyFilters(FISH_DATA, state))
+    setTableData(applyFilters(initialTableData, state))
   }, [state.month, state.now, state.south])
 
   useEffect(() => {
-    setTableData(applyFilters(FISH_DATA, state))
+    setTableData(applyFilters(initialTableData, state))
   }, [debouncedSearchTerm])
 
   function toggleMonth() {
@@ -125,7 +128,6 @@ const FishTable = () => {
     setState({ ...state, search: event.target.value })
   }
 
-  console.log(tableData.length)
   return (
     <>
       <FormControl component="fieldset" fullWidth>
@@ -184,19 +186,18 @@ const FishTable = () => {
           </FormGroup>
 
           <Typography variant="body2" className="italic">
-            * Unlocks At refers to the number of fish you must catch before a
-            given fish will spawn.
+            {notice}
           </Typography>
         </Box>
       </FormControl>
       <SortableTable
-        title="Fish Pricing And Locations"
+        title={`${tableType} Pricing And Locations`}
         dataArray={tableData}
-        headCells={FISH_TABLE_META}
+        headCells={tableMeta}
         getterOptions={{ south: state.south }}
       />
     </>
   )
 }
 
-export default FishTable
+export default PricingLocationTable

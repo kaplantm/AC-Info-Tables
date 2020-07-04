@@ -67,7 +67,6 @@ export const FISH_TABLE_META = [
           const index = MONTHS.ALL_MONTHS.indexOf(month)
           const newIndex = (index + 6) % MONTHS.ALL_MONTHS.length
           const newMonth = MONTHS.ALL_MONTHS[newIndex]
-          console.log({ month, index, newIndex, newMonth })
           return newMonth
         })
       }
