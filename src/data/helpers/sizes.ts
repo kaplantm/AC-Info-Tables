@@ -1,0 +1,6 @@
+export const TINY = "Tiny"
+export const SMALL = "Small"
+export const MEDIUM = "Medium"
+export const LARGE = "Large"
+export const XL = "XL"
+export const XXL = "XXL"
