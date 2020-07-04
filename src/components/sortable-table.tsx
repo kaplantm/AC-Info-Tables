@@ -12,16 +12,7 @@ import Paper from "@material-ui/core/Paper"
 import { stableSort, getComparator } from "../utils/sorting-utils"
 
 function EnhancedTableHead(props) {
-  const {
-    headCells,
-    classes,
-    onSelectAllClick,
-    order,
-    orderBy,
-    numSelected,
-    rowCount,
-    onRequestSort,
-  } = props
+  const { headCells, order, orderBy, onRequestSort } = props
 
   const createSortHandler = property => event => {
     onRequestSort(event, property)
@@ -118,7 +109,7 @@ function SortableTable({
                       {headCells.map(headCell => {
                         return (
                           <TableCell
-                            key={`${name}${headCells.id}`}
+                            key={`${row.name}${headCell.id}`}
                             align={headCell.alignRight ? "right" : "left"}
                           >
                             {headCell.displayGetter

@@ -1,2 +1,7 @@
 export const RIVER = "River"
 export const POND = "Pond"
+export const RIVER_CLIFFTOP = "River (clifftop)"
+export const RIVER_MOUTH = "River (mouth)"
+export const SEA = "Sea"
+export const SEA_RAINY = "Sea (rainy day)"
+export const PIER = "Pier"
