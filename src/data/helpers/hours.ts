@@ -23,52 +23,6 @@ export const PM9 = "9PM"
 export const PM10 = "10PM"
 export const PM11 = "11PM"
 
-// TODO: creates these windows programmatically
-
-export const AM9_TO_PM4 = [AM9, AM10, AM11, PM12, PM1, PM2, PM3, PM4]
-export const AM4_TO_PM9 = [
-  AM4,
-  AM5,
-  AM6,
-  AM7,
-  AM8,
-  AM9,
-  AM10,
-  AM11,
-  PM12,
-  PM1,
-  PM2,
-  PM3,
-  PM4,
-  PM5,
-  PM6,
-  PM7,
-  PM8,
-  PM9,
-]
-
-export const PM9_TO_AM4 = [PM9, PM10, PM11, AM12, AM1, AM2, AM3, AM4]
-export const PM4_TO_AM9 = [
-  PM4,
-  PM5,
-  PM6,
-  PM7,
-  PM8,
-  PM9,
-  PM10,
-  PM11,
-  AM12,
-  AM1,
-  AM2,
-  AM3,
-  AM4,
-  AM5,
-  AM6,
-  AM7,
-  AM8,
-  AM9,
-]
-
 export const ALL_HOURS = [
   AM12,
   AM1,
@@ -95,3 +49,17 @@ export const ALL_HOURS = [
   PM10,
   PM11,
 ]
+
+export function getHoursFromTo(from, to) {
+  if (from === to) {
+    return []
+  }
+  const fromIndex = ALL_HOURS.indexOf(from)
+  const toIndex = ALL_HOURS.indexOf(to) + 1
+
+  if (fromIndex > toIndex) {
+    return [...ALL_HOURS.slice(fromIndex), ...ALL_HOURS.slice(0, toIndex)]
+  }
+
+  return ALL_HOURS.slice(fromIndex, ALL_HOURS.indexOf(to) + 1)
+}
