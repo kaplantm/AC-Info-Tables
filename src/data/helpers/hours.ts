@@ -23,7 +23,9 @@ export const PM9 = "9PM"
 export const PM10 = "10PM"
 export const PM11 = "11PM"
 
-export const AM9_TO_PM4 = [AM9, AM10, AM11, AM12, PM1, PM2, PM3, PM4]
+// TODO: creates these windows programmatically
+
+export const AM9_TO_PM4 = [AM9, AM10, AM11, PM12, PM1, PM2, PM3, PM4]
 export const AM4_TO_PM9 = [
   AM4,
   AM5,
@@ -33,7 +35,7 @@ export const AM4_TO_PM9 = [
   AM9,
   AM10,
   AM11,
-  AM12,
+  PM12,
   PM1,
   PM2,
   PM3,
@@ -45,7 +47,7 @@ export const AM4_TO_PM9 = [
   PM9,
 ]
 
-export const PM9_TO_AM4 = [PM9, PM10, PM11, AM12, AM12, AM1, AM2, AM3, AM4]
+export const PM9_TO_AM4 = [PM9, PM10, PM11, AM12, AM1, AM2, AM3, AM4]
 export const PM4_TO_AM9 = [
   PM4,
   PM5,
@@ -55,7 +57,6 @@ export const PM4_TO_AM9 = [
   PM9,
   PM10,
   PM11,
-  AM12,
   AM12,
   AM1,
   AM2,

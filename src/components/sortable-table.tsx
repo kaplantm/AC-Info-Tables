@@ -1,4 +1,4 @@
-import React from "react"
+import React, { memo } from "react"
 import clsx from "clsx"
 import { makeStyles } from "@material-ui/core/styles"
 import Table from "@material-ui/core/Table"
@@ -54,16 +54,8 @@ const useStyles = makeStyles(theme => ({
   table: {
     minWidth: 750,
   },
-  visuallyHidden: {
-    border: 0,
-    clip: "rect(0 0 0 0)",
-    height: 1,
-    margin: -1,
-    overflow: "hidden",
-    padding: 0,
-    position: "absolute",
-    top: 20,
-    width: 1,
+  noWrap: {
+    whiteSpace: "nowrap",
   },
 }))
 
@@ -111,6 +103,7 @@ function SortableTable({
                           <TableCell
                             key={`${row.name}${headCell.id}`}
                             align={headCell.alignRight ? "right" : "left"}
+                            className={headCell.wrap ? "" : classes.noWrap}
                           >
                             {headCell.displayGetter
                               ? headCell.displayGetter(row[headCell.id])
@@ -130,4 +123,4 @@ function SortableTable({
   )
 }
 
-export default SortableTable
+export default memo(SortableTable)
