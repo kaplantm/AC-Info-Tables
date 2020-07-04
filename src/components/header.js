@@ -1,22 +1,19 @@
 import { Link } from "gatsby"
 import PropTypes from "prop-types"
 import React from "react"
+import { Box, Typography } from "@material-ui/core"
+import theme from "../theme"
 
 const Header = ({ siteTitle }) => (
-  <header
-    style={{
-      background: `rebeccapurple`,
-      marginBottom: `1.45rem`,
-    }}
-  >
-    <div
-      style={{
-        margin: `0 auto`,
-        maxWidth: 960,
-        padding: `1.45rem 1.0875rem`,
-      }}
+  <header>
+    <Box
+      bgcolor={theme.palette.primary.main}
+      display="flex"
+      flex={1}
+      p={3}
+      mb={6}
     >
-      <h1 style={{ margin: 0 }}>
+      <Typography variant="h3" component="h1">
         <Link
           to="/"
           style={{
@@ -26,8 +23,8 @@ const Header = ({ siteTitle }) => (
         >
           {siteTitle}
         </Link>
-      </h1>
-    </div>
+      </Typography>
+    </Box>
   </header>
 )
 

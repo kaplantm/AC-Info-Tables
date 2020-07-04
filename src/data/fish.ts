@@ -3,7 +3,62 @@ import * as MONTHS from "./helpers/months"
 import * as SIZES from "./helpers/sizes"
 import * as HOURS from "./helpers/hours"
 
-export const FISH_DATA = [
+export const FISH_TABLE_META = [
+  {
+    id: "name",
+    sortable: true,
+    alignRight: false,
+    disablePadding: false,
+    label: "Name",
+    displayGetter: undefined,
+  },
+  {
+    id: "price",
+    sortable: true,
+    alignRight: true,
+    disablePadding: false,
+    label: "Price",
+    displayGetter: undefined,
+  },
+  {
+    id: "location",
+    sortable: true,
+    alignRight: false,
+    disablePadding: false,
+    label: "Location",
+    displayGetter: undefined,
+  },
+  {
+    id: "months",
+    sortable: false,
+    alignRight: false,
+    disablePadding: false,
+    label: "Months",
+    displayGetter: months => {
+      return months.length === MONTHS.ALL_MONTHS.length
+        ? "All"
+        : months.join(", ")
+    },
+  },
+  {
+    id: "size",
+    sortable: true,
+    alignRight: false,
+    disablePadding: false,
+    label: "Size",
+    displayGetter: undefined,
+  },
+  {
+    id: "unlock",
+    sortable: true,
+    alignRight: true,
+    disablePadding: false,
+    label: "# Caught",
+    displayGetter: undefined,
+  },
+]
+
+const FISH_DATA = [
   {
     name: "Bitterling",
     price: 900,
@@ -92,3 +147,5 @@ export const FISH_DATA = [
     unlock: 20,
   },
 ]
+
+export default FISH_DATA
