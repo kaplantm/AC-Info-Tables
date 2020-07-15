@@ -70,14 +70,24 @@ const Header = ({ siteTitle }) => {
         </Box>
         <nav className={classes.nav}>
           <Typography variant="h4" className={classes.navItem}>
-            <MuiLink component={Link} to="/">
-              Fish
+            <MuiLink
+              component={Link}
+              to="/"
+              activeClassName="navLinkActive"
+              className="navLink"
+            >
+              <div>Fish</div>
             </MuiLink>
           </Typography>
 
           <Typography variant="h4" className={classes.navItem}>
-            <MuiLink component={Link} to="/bugs">
-              Bugs?
+            <MuiLink
+              component={Link}
+              to="/bugs"
+              activeClassName="navLinkActive"
+              className="navLink"
+            >
+              <div>Bugs</div>
             </MuiLink>
           </Typography>
         </nav>
