@@ -15,6 +15,7 @@ import Container from "@material-ui/core/Container"
 import Link from "@material-ui/core/Link"
 import Typography from "@material-ui/core/Typography"
 import Box from "@material-ui/core/Box"
+import AdComponent from "./ad"
 
 const useStyles = makeStyles(theme => ({
   footer: {
@@ -41,6 +42,7 @@ const Layout = ({ children }) => {
       <Container>
         <main>{children}</main>
 
+        <AdComponent />
         <footer className={classes.footer}>
           <Link
             href="https://github.com/kaplantm/AC-Info-Tables/issues"

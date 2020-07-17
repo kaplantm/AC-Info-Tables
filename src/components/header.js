@@ -1,8 +1,8 @@
+import React from "react"
 import { Link } from "gatsby"
 import { makeStyles } from "@material-ui/core/styles"
 import Box from "@material-ui/core/Box"
 import Typography from "@material-ui/core/Typography"
-import React from "react"
 import MuiLink from "@material-ui/core/Link"
 import { fade } from "@material-ui/core/styles/colorManipulator"
 
